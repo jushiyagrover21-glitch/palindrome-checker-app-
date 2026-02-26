@@ -9,29 +9,32 @@ public class PalindromeCheckerApp {
         System.out.println("Enter a string to check palindrome:");
         String input = scanner.nextLine();
 
-        if (isPalindromeRecursive(input, 0, input.length() - 1)) {
-            System.out.println("The given string is a Palindrome.");
+        // Normalize string: remove spaces and convert to lowercase
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        if (isPalindrome(normalized)) {
+            System.out.println("The given string is a Palindrome (case-insensitive & spaces ignored).");
         } else {
-            System.out.println("The given string is NOT a Palindrome.");
+            System.out.println("The given string is NOT a Palindrome (case-insensitive & spaces ignored).");
         }
 
         scanner.close();
     }
 
-    // Recursive palindrome check
-    public static boolean isPalindromeRecursive(String str, int start, int end) {
+    // Simple palindrome check using two-pointer approach
+    public static boolean isPalindrome(String str) {
 
-        // Base condition: crossed over
-        if (start >= end) {
-            return true;
+        int start = 0;
+        int end = str.length() - 1;
+
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
         }
 
-        // Check characters at start & end
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call moving towards center
-        return isPalindromeRecursive(str, start + 1, end - 1);
+        return true;
     }
 }
